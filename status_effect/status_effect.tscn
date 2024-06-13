@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://da4c38v5tv725"]
+
+[ext_resource type="Script" path="res://status_effect/scripts/status_effect.gd" id="1_s7ras"]
+
+[node name="StatusEffect" type="Node"]
+script = ExtResource("1_s7ras")
+
+[node name="DurationTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="DurationTimer" to="." method="_on_effect_terminated"]
