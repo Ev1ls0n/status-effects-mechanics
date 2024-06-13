@@ -5,7 +5,9 @@ const STATUS_EFFECT : PackedScene = preload("res://status_effect/status_effect.t
 
 
 func add_status_effect(effect_data: StatusEffectData) -> void:
-	if not _find_status_effect(effect_data.name):
+	var existing_status_effect : StatusEffect = _get_status_effect(effect_data.name)
+	
+	if existing_status_effect == null:
 		var status_effect = STATUS_EFFECT.instantiate() as StatusEffect
 		
 		status_effect.effect_terminated.connect(_cancel_status_effect)
@@ -13,6 +15,9 @@ func add_status_effect(effect_data: StatusEffectData) -> void:
 		
 		_apply_status_effect(status_effect.data)
 		self.add_child(status_effect)
+	else:
+		existing_status_effect.duration_renew()
+	
 	return
 
 
@@ -26,12 +31,12 @@ func _cancel_status_effect(effect_data: StatusEffectData) -> void:
 	return
 
 
-func _find_status_effect(effect_name: String) -> bool:
-	var result = false
+func _get_status_effect(effect_name: String) -> StatusEffect:
+	var result : StatusEffect = null
 	
 	for status_effect in self.get_children():
 		if effect_name == (status_effect as StatusEffect).data.name:
-			result = true
+			result = (status_effect as StatusEffect)
 			break
 	
 	return result

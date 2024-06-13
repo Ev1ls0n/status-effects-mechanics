@@ -15,7 +15,7 @@ func _ready() -> void:
 	return
 
 
-func duration_reset(time_sec: float = -1) -> void:
+func duration_renew(time_sec: float = -1) -> void:
 	_duration_timer.start(time_sec)
 	return
 
